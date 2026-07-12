@@ -2,7 +2,7 @@
 
 A **free music + SFX generation** loop actor for
 [`network-isekai`](https://github.com/gftdcojp/network-isekai), gftdcojp's
-sixth of seven per-modality asset actors (ADR-2607122200). Persona: **リツ
+sixth of seven per-modality asset actors (ADR-2607122400). Persona: **リツ
 (Ritsu)**, 作曲家 (composer) — "静けさを恐れない作曲家。曲もSFXも間を大事に
 する — 音数より余白で語る。" (see `resources/persona.edn`). Sibling actors:
 `gftd-illust-actor` (illustration), `gftd-sculpt-actor` (3D), `gftd-rig-actor`
@@ -23,7 +23,7 @@ Unlike its six siblings, each of which has exactly one fixed murakumo
 modality, `gftd-audio-actor` is **dual-modality**. Per cloud-murakumo's
 `murakumo.edn` (`:apps :generation`), `:music` and `:sfx` are two separate
 `:fn/modality` entries that happen to share the same `:fn/engine :audio` —
-and ADR-2607122200 groups them under one persona ("作曲家・リツ, composer,
+and ADR-2607122400 groups them under one persona ("作曲家・リツ, composer,
 music+sfx"), so one repo/persona/ledger covers both rather than splitting
 into `gftd-music-actor` + `gftd-sfx-actor`.
 
@@ -95,7 +95,7 @@ for games to consume.
 Unlike a typical actor repo, `assets/` here is **git-annex + Backblaze B2**
 (`-c text2git`: code/EDN stay plain git, binaries get annexed) — accepted
 assets are saved straight into this repo and pushed to B2, so "actor's own
-git repo" and "asset storage" are the same thing (ADR-2607122200 §5).
+git repo" and "asset storage" are the same thing (ADR-2607122400 §5).
 `assets/<id>.edn` is written in the `network-isekai` `isekai.asset` manifest
 shape so a later Asset Hub import needs no conversion.
 
@@ -125,7 +125,7 @@ CACAO identity is self-minted to `.audio/identity.edn` on first run
 
 ## Design
 
-ADR-2607122200 (`network-isekai 向け murakumo 生成アセット持続ループ actor
+ADR-2607122400 (`network-isekai 向け murakumo 生成アセット持続ループ actor
 群`) is the SSoT for this actor and its six siblings. Direct code ancestry:
 `cloud-itonami`'s `src/cloud_itonami/media/{murakumo,aozora,cacao,publisher,
 publish}.clj(c)` (murakumo→governor→aozora pipeline), `cloud-murakumo`'s
