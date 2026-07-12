@@ -1,0 +1,9 @@
+;; .audio/ holds BOTH the CACAO private key (identity.edn, never commit)
+;; AND ephemeral loop lease/state files — neither belongs in git.
+;; ledger/events.edn itself IS the audit trail and is intentionally
+;; NOT ignored (plain git text2git, see audio.ledger's docstring).
+.audio/
+.cpcache/
+target/
+.clj-kondo/.cache/
+*.class
