@@ -1,5 +1,5 @@
 (ns audio.generate
-  "Pure candidate builder for one co-scientist round (ADR-2607122400 §2/§3).
+  "Pure candidate builder for one co-scientist round (ADR-2607123000 §2/§3).
 
   Same 'closed hypothesis pool, no LLM in Generation' discipline
   cloud_murakumo.cosci uses: a small enumerable gene pool of mood/tempo/
@@ -10,7 +10,7 @@
   advancing (audio.loop) and by biasing one gene slot toward the previous
   round's elite (audio.cosci/evolve-round).
 
-  DUAL-MODALITY (STEP 2, ADR-2607122400 — this actor's one structural
+  DUAL-MODALITY (STEP 2, ADR-2607123000 — this actor's one structural
   difference from its six single-modality siblings): each round MIXES
   :music- and :sfx-flavored candidates rather than producing one fixed
   modality — even candidate index -> :music (from `music-gene-pool`), odd

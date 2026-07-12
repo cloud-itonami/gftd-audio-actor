@@ -9,7 +9,7 @@
   TEXT for persona-fit and descriptive quality, not the rendered audio the
   generation job actually produced. A real perceptual judge (an audio
   quality model, a listening-capable critique call) is follow-up work — see
-  ADR-2607122400 Consequences."
+  ADR-2607123000 Consequences."
   (:require [cheshire.core :as json]
             [clojure.string :as str])
   (:import [java.net URI]

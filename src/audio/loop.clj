@@ -1,5 +1,5 @@
 (ns audio.loop
-  "The durable outer loop (ADR-2607122400 §3) — NOT a StateGraph. murakumo
+  "The durable outer loop (ADR-2607123000 §3) — NOT a StateGraph. murakumo
   generation jobs are async (:queued -> :running -> :done|:failed over
   minutes), so a tick either (a) submits a fresh round when under budget and
   nothing is pending, or (b) polls a pending round and, once settled, runs it
@@ -7,7 +7,7 @@
   to repeated `tick!` calls; crash recovery is just re-running tick! against
   the same on-disk state/lease/ledger — every step here is safe to repeat.
 
-  DUAL-MODALITY (STEP 2/3, ADR-2607122400): audio.generate/round-candidates
+  DUAL-MODALITY (STEP 2/3, ADR-2607123000): audio.generate/round-candidates
   mixes :music and :sfx candidates within every round, so submit-round!'s
   candidates each carry their own :modality (consumed by
   audio.murakumo/submit!), and settle-round! titles/manifests the winning
@@ -158,7 +158,7 @@
   "All pending jobs are terminal (or the round timed out) -> run cosci,
   governor-check the winner, commit+publish if it passes, ledger everything,
   advance :round/:elite-gene, clear :pending. `publisher` defaults to the
-  REAL aozora publisher (ADR-2607122400 — live by default); pass
+  REAL aozora publisher (ADR-2607123000 — live by default); pass
   audio.publisher/mock-publisher in tests."
   ([state] (settle-round! state nil))
   ([state publisher]

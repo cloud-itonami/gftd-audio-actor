@@ -2,7 +2,7 @@
 ;; exactly one fixed murakumo modality): per cloud-murakumo's murakumo.edn
 ;; `:apps :generation`, both `:music` and `:sfx` are separate :fn/modality
 ;; entries that share the same `:fn/engine :audio`. gftd-audio-actor covers
-;; both under one persona (ADR-2607122400 groups them as "作曲家・リツ
+;; both under one persona (ADR-2607123000 groups them as "作曲家・リツ
 ;; (composer, music+sfx)"). :persona/modality below is kept for shape
 ;; parity with the other 6 actors' persona.edn (and used as the loop's
 ;; round-0 default bias) but is NOT the only modality this actor submits —
