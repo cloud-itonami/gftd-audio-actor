@@ -74,6 +74,21 @@ model-id として書くのは嘘になる（関数 ID であってモデルで�
 下流の `ongaku.work/validate-work` は `:missing-model-id` を出し続けるが、
 **それが正しい状態** —— どのモデルが作ったか分からないまま納品はできない。
 
+### Test
+
+```bash
+clojure -M:test   # 30 tests / 59 assertions
+```
+
+**2026-08-07 まで、この suite は 1 度も走っていなかった。** `deps.edn` が
+`io.github.kotoba-lang/ed25519` を直接宣言していなかったため、tools.deps が
+`Unable to compare versions` で classpath を組めなかった —— cloud-murakumo が
+その lib を `:local/root`（改名後の `org-ietf-ed25519` を指す）で持ち、その依存先の
+`kotoba-lang/murakumo` が同じ lib 名を `:git/sha` で持っていて、ここから consume
+すると両方が推移依存に落ちて比較できなくなる。cloud-murakumo 単体では自分の
+top-level 宣言が勝つので通っており、**1 レベル上でだけ壊れる**ので気付きにくい。
+top-level に同じ `:local/root` を置いて解決した（cloud-murakumo 自身と同じ形）。
+
 ### 未解決: `:cc0` 主張の根拠
 
 `resources/persona.edn` は `:persona/license :cc0` を宣言し、`audio.governor` は
