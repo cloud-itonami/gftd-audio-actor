@@ -26,7 +26,8 @@
   actor is dual-modality (:music/:sfx, both engine :audio) — `:asset/gen
   :stage` reflects the WINNING candidate's own `:modality` rather than a
   hardcoded keyword, since either flavor can win a round."
-  [{:keys [id kind format title license tags gen-job-id prompt created modality]}]
+  [{:keys [id kind format title license tags gen-job-id prompt created modality
+           fn-id]}]
   {:asset/id id
    :asset/kind kind
    :asset/format format
@@ -37,6 +38,21 @@
    :asset/source :gen
    :asset/gen {:stage (or modality :music) :job-key gen-job-id :prompt prompt
                :provenance "murakumo/audio via gftd-audio-actor co-scientist loop"}
+   ;; 下流（cloud-itonami-isco-2652 の受注 gate、sakkyokuka の作品台帳）が
+   ;; **機械で読める** provenance。上の :asset/gen :provenance は人が読む散文で、
+   ;; 「AI が作ったのか人が書いたのか」を問い合わせる側からは使えなかった。
+   ;;
+   ;; :work/model-id は **意図的に立てない**。murakumo の function entry が持つのは
+   ;; :fn/id / :fn/engine / :fn/kind / :fn/modality だけで、実際にどのモデルが
+   ;; 生成したかはエンジン側が選ぶためこの actor からは観測できない。:fn/id を
+   ;; model-id として記録するのは嘘になる（関数 ID であってモデルではない）。
+   ;; その結果 ongaku.work/validate-work は :missing-model-id を出し続けるが、
+   ;; **それが正しい状態** —— どのモデルが作ったか分からないまま納品はできない。
+   :work/provenance :generated
+   :work/generator (cond-> {:murakumo/engine :audio
+                            :murakumo/modality (or modality :music)
+                            :gen/job-id gen-job-id}
+                     fn-id (assoc :murakumo/fn-id fn-id))
    :asset/created created})
 
 (defn write-asset!
