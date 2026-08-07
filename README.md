@@ -50,6 +50,40 @@ polling/settling in `audio.loop` — needed **no** modality-aware branching,
 since a `:done` job's declared output format already disambiguates what
 matters structurally.
 
+## 下流が読む provenance
+
+この actor が publish する資産は、あとで
+[`cloud-itonami-isco-2652`](https://github.com/cloud-itonami/cloud-itonami-isco-2652)
+の受注 gate や [`sakkyokuka`](https://github.com/cloud-itonami/sakkyokuka) の
+作品台帳へ流れる。そこが必要とするのは「AI が作ったのか人が書いたのか」を
+**機械で読める**形で、`:asset/gen :provenance`（英語の散文 1 行）では答えられない。
+そこで manifest に構造化した事実を載せる:
+
+```clojure
+:work/provenance :generated
+:work/generator {:murakumo/engine :audio
+                 :murakumo/modality :music     ; or :sfx
+                 :murakumo/fn-id "gen.music"
+                 :gen/job-id "job-123"}
+```
+
+**`:work/model-id` は意図的に立てていない。** murakumo の function entry が持つのは
+`:fn/id` / `:fn/engine` / `:fn/kind` / `:fn/modality` だけで、実際にどのモデルが
+生成したかはエンジン側が選ぶため、この actor からは観測できない。`:fn/id` を
+model-id として書くのは嘘になる（関数 ID であってモデルではない）。結果として
+下流の `ongaku.work/validate-work` は `:missing-model-id` を出し続けるが、
+**それが正しい状態** —— どのモデルが作ったか分からないまま納品はできない。
+
+### 未解決: `:cc0` 主張の根拠
+
+`resources/persona.edn` は `:persona/license :cc0` を宣言し、`audio.governor` は
+`#{:cc0 :cc-by :public-domain}` を強制する。つまりこの actor は生成音源すべてに
+**パブリックドメイン献呈という権利主張**を貼っている。`ongaku.holdings` 側には
+「CC0 として出ている資産から何を渡せるか」の判断が入ったが、**その資産を CC0 で
+出してよいかどうか**（= murakumo 生成モデルの出力条項）はどこにも記録されていない。
+governor が検査しているのはライセンス値が許可集合に入っていることだけで、主張が
+裏付けられていることではない。ADR-2608081000 の gap として起票済み。
+
 ## The core contract
 
 ```
