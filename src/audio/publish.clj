@@ -3,7 +3,7 @@
   Mirrors `cloud_itonami.media.publish`'s shape (never re-validates what the
   governor already checked; refuses to publish anything the governor held —
   callers only reach this ns after audio.governor/ok? is true)."
-  (:require [cheshire.core :as json]
+  (:require [json.compat :as json]
             [audio.cacao :as cacao]
             [audio.aozora :as aozora]
             [audio.publisher :as pub-proto]))

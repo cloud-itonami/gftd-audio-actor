@@ -10,7 +10,7 @@
   generation job actually produced. A real perceptual judge (an audio
   quality model, a listening-capable critique call) is follow-up work — see
   ADR-2607123000 Consequences."
-  (:require [cheshire.core :as json]
+  (:require [json.compat :as json]
             [clojure.string :as str])
   (:import [java.net URI]
            [java.net.http HttpClient HttpRequest HttpRequest$BodyPublishers HttpResponse$BodyHandlers]
