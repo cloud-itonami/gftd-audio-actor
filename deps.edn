@@ -8,7 +8,7 @@
         ;; re-deriving it here.
         io.github.gftdcojp/cloud-murakumo {:local/root "../../network-awai/cloud-murakumo"}
         ;; ed25519 を **この repo の直接依存として明示する**。理由は座標の二重化:
-        ;; cloud-murakumo は io.github.kotoba-lang/ed25519 を :local/root
+        ;; cloud-murakumo は io.github.kotoba-lang/org-ietf-ed25519 を :local/root
         ;; （改名後の org-ietf-ed25519 を指す）で持ち、その依存先の
         ;; kotoba-lang/murakumo は同じ lib 名を :git/sha で持っている。
         ;; cloud-murakumo 単体では自分の top-level 宣言が勝つので解決するが、
@@ -16,7 +16,10 @@
         ;; 「Unable to compare versions」で classpath を組めなくなる
         ;; （実測: この repo の suite は無改変の main でも 1 度も走っていなかった）。
         ;; top-level に置けば深さ 1 で勝つ。cloud-murakumo 自身と同じ形。
-        io.github.kotoba-lang/ed25519 {:local/root "../../kotoba-lang/org-ietf-ed25519"}}
+        ;; 座標は改名後の名前で書く。旧名 io.github.kotoba-lang/ed25519 と
+        ;; org-ietf-ed25519 は tools.deps にとって別 lib なので、両方が closure に
+        ;; 居ると ed25519.core が二重に載る。
+        io.github.kotoba-lang/org-ietf-ed25519 {:local/root "../../kotoba-lang/org-ietf-ed25519"}}
  :aliases
  {:run {:main-opts ["-m" "audio.main"]}
   :test {:extra-paths ["test"]
